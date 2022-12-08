@@ -1,5 +1,5 @@
 const express = require('express');
-const Joi = require('joi'); //used for validation
+const Joi = require('joi');
 const app = express();
 app.use(express.json());
 
@@ -69,11 +69,10 @@ app.delete('/api/books/:id', (req, res) => {
 });
 
 function validateBook(book) {
-    const schema = {
-        title: Joi.string().min(3).required()
-    };
-    return Joi.validate(book, schema);
-
+    const schema = Joi.object({
+        title: Joi.string().min(3).max(30).required()
+    });
+    return schema.validate(book);
 }
 
 //PORT ENVIRONMENT VARIABLE
